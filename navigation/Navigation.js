@@ -2,6 +2,10 @@ import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import LoadOrdersNavigator from './load/LoadOrdersNavigator';
+import PackOrdersNavigator from './pack/PackOrdersNavigator';
+import SendOrdersNavigator from './send/SendOrdersNavigator';
+
 const Stack = createNativeStackNavigator();
 
 export default function Navigator() {
@@ -13,9 +17,18 @@ export default function Navigator() {
                     component={HomeScreen}
                     options={{ title: "Welcome" }}
                 />
-                <Stack.Screen name="Load Order" component={LoadOrdersScreen} />
-                <Stack.Screen name="Pack Order" component={PackOrdersScreen} />
-                <Stack.Screen name="Send Order" component={SendOrdersScreen} />
+                <Stack.Screen 
+                    name="Load Order" 
+                    component={LoadOrdersScreen}
+                />
+                <Stack.Screen 
+                    name="Pack Order" 
+                    component={PackOrdersScreen} 
+                />
+                <Stack.Screen 
+                    name="Send Order" 
+                    component={SendOrdersScreen} 
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
@@ -33,25 +46,29 @@ const HomeScreen = ({ navigation }) => {
                     }}
                 />
             </View>
-            <View style={styles.imageContainer}>
+            <View 
+                style={styles.imageContainer}>
                 <Image
-                    //style={styles.tinyLogo}
+                    style={styles.image}
                     source={require('../assets/images/sample-icon.png')}
                 />
             </View>
             <Button
+                style={styles.button}
                 title="Load Order"
                 onPress={() =>
                     navigation.navigate('Load Order', { name: 'Bob' })
                 }
             />
             <Button
+                style={styles.button}
                 title="Pack Order"
                 onPress={() =>
                     navigation.navigate('Pack Order', { name: 'Bob' })
                 }
             />
             <Button
+                style={styles.button}
                 title="Send Order"
                 onPress={() =>
                     navigation.navigate('Send Order', { name: 'Bob' })
@@ -63,19 +80,19 @@ const HomeScreen = ({ navigation }) => {
 
 const LoadOrdersScreen = ({ navigation, route }) => {
     return (
-        <Text>Load Order: {route.params.name}</Text>
+        <LoadOrdersNavigator/>
     );
 }
 
 const PackOrdersScreen = ({ navigation, route }) => {
     return (
-        <Text>Pack Order: {route.params.name}</Text>
+        <PackOrdersNavigator/>
     );
 }
 
 const SendOrdersScreen = ({ navigation, route }) => {
     return (
-        <Text>Send Order: {route.params.name}</Text>
+        <SendOrdersNavigator/>
     );
 }
 
@@ -97,12 +114,14 @@ const styles = StyleSheet.create({
 
     },
     imageContainer: {
-  
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'white',
     },
-    buttonContainer:{
-  
+    buttonContainer: {
+
     },
-    button:{
-  
+    button: {
+
     },
 });
