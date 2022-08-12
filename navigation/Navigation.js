@@ -6,7 +6,9 @@ import LoadOrdersNavigator from './load/LoadOrdersNavigator';
 import PackOrdersNavigator from './pack/PackOrdersNavigator';
 import SendOrdersNavigator from './send/SendOrdersNavigator';
 
+
 const Stack = createNativeStackNavigator();
+
 
 export default function Navigator() {
     return (
@@ -74,6 +76,7 @@ const HomeScreen = ({ navigation }) => {
                     navigation.navigate('Send Order', { name: 'Bob' })
                 }
             />
+            <Text>User</Text>
         </View>
     );
 }

@@ -1,23 +1,47 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, BackHandler } from 'react-native';
 import Navigator from './navigation/Navigation.js';
+import { useState } from 'react';
+import UserSelect from './component/UserSelect.js';
 
-//const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [user, setUser] = useState([]); //User list. Select hand held user to 'log in' as.
+  const [isModalVisible, setIsModalVisible] = useState(true)
+
+  //Begin login modal
+  function startAddItemHandler() {
+    setModalIsVisible(true);
+  }
+
+  function setUserHandler(userData) {
+    console.log(userData);
+    if (userData != null) {
+      setUser(userData);
+      setIsModalVisible(false)
+    } else {
+      setIsModalVisible(true)
+    }
+  }
+
+  function closeApplicationHandler() {
+    BackHandler.exitApp();
+  }
+
   return (
-    <View style={styles.container}>
-      
-
-      <Navigator/>
-
-    </View>
+    <>
+      <StatusBar style='auto' />
+      <View style={styles.appContainer}>
+        <UserSelect visible={isModalVisible} onLogin={setUserHandler} onExit={closeApplicationHandler} />
+        <Navigator />
+      </View>
+    </>
 
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     flex: 1,
     // backgroundColor: '#fff',
     // alignItems: 'center',
