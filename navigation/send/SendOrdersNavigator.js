@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, Button} from 'react-native';
 
-export default function SendOrdersNavigator() {
+export default function SendOrdersScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>This function will validate all completed orders on the unit. Those orders will be ready for transfering back to the main system.</Text>

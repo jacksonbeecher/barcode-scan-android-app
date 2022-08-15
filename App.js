@@ -1,41 +1,120 @@
+import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, BackHandler } from 'react-native';
-import Navigator from './navigation/Navigation.js';
+import { StyleSheet, View, Button,Image, Text} from 'react-native';
 import { useState } from 'react';
-import UserSelect from './component/UserSelect.js';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoadOrdersNavigator from './navigation/load/LoadOrdersNavigator';
+import PackOrdersNavigator from './navigation/pack/PackOrdersNavigator';
+import SendOrdersNavigator from './navigation/send/SendOrdersNavigator';
 
+
+
+const HomeScreen = ({ navigation }) => {
+  return (
+      <View>
+          <View style={styles.buttonContainer}>
+              <Button
+                  style={styles.button}
+                  title="Logout"
+                  onPress={() => {
+                      alert("Logged out")
+                  }}
+              />
+          </View>
+          <View 
+              style={styles.imageContainer}>
+              <Image
+                  style={styles.image}
+                  source={require('./assets/images/sample-icon.png')}
+              />
+          </View>
+          <Button
+              style={styles.button}
+              title="Load Order"
+              onPress={() =>
+                  navigation.navigate('Load Order')
+              }
+          />
+          <Button
+              style={styles.button}
+              title="Pack Order"
+              onPress={() =>
+                  navigation.navigate('Pack Order')
+              }
+          />
+          <Button
+              style={styles.button}
+              title="Send Order"
+              onPress={() =>
+                  navigation.navigate('Send Order')
+              }
+          />
+          <Text>User: {}</Text>
+      </View>
+  );
+}
+
+const LoadOrdersScreen = ({ navigation }) => {
+  return (
+      <LoadOrdersNavigator/>
+  );
+}
+
+const PackOrdersScreen = ({ navigation }) => {
+  return (
+      <PackOrdersNavigator/>
+  );
+}
+
+const SendOrdersScreen = ({ navigation }) => {
+  return (
+      <SendOrdersNavigator/>
+  );
+}
+
+const LoginScreen = ({navigation}) => {
+  return (
+    <View>
+
+    </View>
+  )
+}
+
+
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState([]); //User list. Select hand held user to 'log in' as.
-  const [isModalVisible, setIsModalVisible] = useState(true)
-
-  //Begin login modal
-  function startAddItemHandler() {
-    setModalIsVisible(true);
-  }
-
-  function setUserHandler(userData) {
-    console.log(userData);
-    if (userData != null) {
-      setUser(userData);
-      setIsModalVisible(false)
-    } else {
-      setIsModalVisible(true)
-    }
-  }
-
-  function closeApplicationHandler() {
-    BackHandler.exitApp();
-  }
-
   return (
-    <>
-      <StatusBar style='auto' />
-      <View style={styles.appContainer}>
-        <UserSelect visible={isModalVisible} onLogin={setUserHandler} onExit={closeApplicationHandler} />
-        <Navigator />
-      </View>
-    </>
+    <NavigationContainer>
+            <Stack.Navigator>
+
+                <Stack.Screen
+                    name="Home"
+                    component={HomeScreen}
+                    options={{ title: "Title" }}
+                />
+                <Stack.Screen 
+                    name="Load Order" 
+                    component={LoadOrdersScreen}
+                />
+                <Stack.Screen 
+                    name="Pack Order" 
+                    component={PackOrdersScreen} 
+                />
+                <Stack.Screen 
+                    name="Send Order" 
+                    component={SendOrdersScreen} 
+                />
+                { /* Conditional formatting based on logged in user */ }
+                <Stack.Screen 
+                    name="Login" 
+                    component={LoginScreen} 
+                />
+
+            </Stack.Navigator>
+        </NavigationContainer>
 
   );
 }
@@ -50,6 +129,13 @@ const styles = StyleSheet.create({
   navContainer: {
     flex: 1,
   },
+  image: {
 
+  },
+  imageContainer: {
+      justifyContent:'center',
+      alignItems:'center',
+      backgroundColor:'white',
+  },
 
 });

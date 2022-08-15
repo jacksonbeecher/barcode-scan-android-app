@@ -1,23 +1,20 @@
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import LoadOrdersNavigator from './load/LoadOrdersNavigator';
 import PackOrdersNavigator from './pack/PackOrdersNavigator';
 import SendOrdersNavigator from './send/SendOrdersNavigator';
 
 
-const Stack = createNativeStackNavigator();
 
-
-export default function Navigator() {
+export default function HomeScreen() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen
                     name="Home"
                     component={HomeScreen}
-                    options={{ title: "Welcome" }}
+                    options={{ title: "Title" }}
                 />
                 <Stack.Screen 
                     name="Load Order" 
@@ -33,6 +30,7 @@ export default function Navigator() {
                 />
             </Stack.Navigator>
         </NavigationContainer>
+        
     );
 }
 
@@ -45,6 +43,7 @@ const HomeScreen = ({ navigation }) => {
                     title="Logout"
                     onPress={() => {
                         alert("Logged out")
+
                     }}
                 />
             </View>
@@ -59,24 +58,24 @@ const HomeScreen = ({ navigation }) => {
                 style={styles.button}
                 title="Load Order"
                 onPress={() =>
-                    navigation.navigate('Load Order', { name: 'Bob' })
+                    navigation.navigate('Load Order')
                 }
             />
             <Button
                 style={styles.button}
                 title="Pack Order"
                 onPress={() =>
-                    navigation.navigate('Pack Order', { name: 'Bob' })
+                    navigation.navigate('Pack Order')
                 }
             />
             <Button
                 style={styles.button}
                 title="Send Order"
                 onPress={() =>
-                    navigation.navigate('Send Order', { name: 'Bob' })
+                    navigation.navigate('Send Order')
                 }
             />
-            <Text>User</Text>
+            <Text>User: {}</Text>
         </View>
     );
 }
@@ -98,13 +97,6 @@ const SendOrdersScreen = ({ navigation, route }) => {
         <SendOrdersNavigator/>
     );
 }
-
-// const LoginScreen = ({ navigation, route }) => {
-//   return (
-//     <Text>Login: {route.params.name}</Text>
-
-//   );
-// }
 
 const styles = StyleSheet.create({
     container: {

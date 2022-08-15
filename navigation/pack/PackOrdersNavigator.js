@@ -1,6 +1,6 @@
 import { StyleSheet, View, Image, Text } from 'react-native';
 
-export default function PackOrdersNavigator() {
+export default function PackOrdersScreen() {
     return (
         <Text>Pack Order: </Text>
     );

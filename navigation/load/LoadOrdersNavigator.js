@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, Button } from 'react-native';
 
-export default function LoadOrdersNavigator() {
+export default function LoadOrdersScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>This function will load and prepare orders ready for packing.</Text>

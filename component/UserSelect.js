@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FlatList, View, Text, StyleSheet, Pressable, Modal } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function UserSelect(props) {
-    const [selectedUser, setSelectedUserData] = useState();
-    const [selectedUsername, setSelectedUsername] = useState('');
+    const [selectedUser, setSelectedUserData] = useState([]);
     const sampleData = [
         { id: 1, user: "User 1" },
         { id: 2, user: "User 2" },
@@ -14,15 +14,34 @@ function UserSelect(props) {
 
     //Assign values to selected user object.
     function SelectedUserHandler(item) {
+        //console.log(item);
         setSelectedUserData(item);
-        setSelectedUsername(item.user);
+        storeUser(item)
     }
+
+    //Store user data in AsyncStorage
+    const storeUser = async (value) => {
+        try {
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem('currentUser', jsonValue);
+        } catch (e) {
+            //Storage error.
+        }
+    }
+
+    const removeUser = async () => {
+        try {
+          await AsyncStorage.removeItem('currentUser')
+        } catch(e) {
+          // remove error
+        }
+      }
 
     return (
         <Modal animationType='slide' visible={props.visible}>
             <View style={styles.container}>
                 <Text style={styles.title}>Select your user name from the list and tap Log In to continue</Text>
-                <Text style={styles.text}>Selected User: {selectedUsername}</Text>
+                <Text style={styles.text}>Selected User: {selectedUser.user}</Text>
                 <FlatList
                     style={styles.userContainer}
                     data={sampleData}
