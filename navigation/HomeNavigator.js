@@ -1,36 +1,25 @@
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoadOrdersNavigator from './load/LoadOrdersNavigator';
 import PackOrdersNavigator from './pack/PackOrdersNavigator';
 import SendOrdersNavigator from './send/SendOrdersNavigator';
 
-
-
-export default function HomeScreen() {
+const LoadOrdersScreen = ({ navigation }) => {
     return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Home"
-                    component={HomeScreen}
-                    options={{ title: "Title" }}
-                />
-                <Stack.Screen 
-                    name="Load Order" 
-                    component={LoadOrdersScreen}
-                />
-                <Stack.Screen 
-                    name="Pack Order" 
-                    component={PackOrdersScreen} 
-                />
-                <Stack.Screen 
-                    name="Send Order" 
-                    component={SendOrdersScreen} 
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
-        
+        <LoadOrdersNavigator />
+    );
+}
+
+const PackOrdersScreen = ({ navigation }) => {
+    return (
+        <PackOrdersNavigator />
+    );
+}
+
+const SendOrdersScreen = ({ navigation }) => {
+    return (
+        <SendOrdersNavigator />
     );
 }
 
@@ -47,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
                     }}
                 />
             </View>
-            <View 
+            <View
                 style={styles.imageContainer}>
                 <Image
                     style={styles.image}
@@ -75,26 +64,34 @@ const HomeScreen = ({ navigation }) => {
                     navigation.navigate('Send Order')
                 }
             />
-            <Text>User: {}</Text>
+            <Text>User: </Text>
         </View>
     );
 }
 
-const LoadOrdersScreen = ({ navigation, route }) => {
+const Stack = createNativeStackNavigator();
+//Home displays menu when logged in. 
+export default function Home({ navigation }) {
     return (
-        <LoadOrdersNavigator/>
-    );
-}
-
-const PackOrdersScreen = ({ navigation, route }) => {
-    return (
-        <PackOrdersNavigator/>
-    );
-}
-
-const SendOrdersScreen = ({ navigation, route }) => {
-    return (
-        <SendOrdersNavigator/>
+        <Stack.Navigator>
+            <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ title: "Title" }}
+            />
+            <Stack.Screen
+                name="Load Order"
+                component={LoadOrdersScreen}
+            />
+            <Stack.Screen
+                name="Pack Order"
+                component={PackOrdersScreen}
+            />
+            <Stack.Screen
+                name="Send Order"
+                component={SendOrdersScreen}
+            />
+        </Stack.Navigator>
     );
 }
 
@@ -109,9 +106,9 @@ const styles = StyleSheet.create({
 
     },
     imageContainer: {
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
     },
     buttonContainer: {
 
