@@ -1,29 +1,11 @@
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoadOrdersNavigator from './load/LoadOrdersNavigator';
-import PackOrdersNavigator from './pack/PackOrdersNavigator';
-import SendOrdersNavigator from './send/SendOrdersNavigator';
+import LoadOrdersScreen from './load/LoadOrdersNavigator';
+import PackOrdersScreen from './pack/PackOrdersNavigator';
+import SendOrdersScreen from './send/SendOrdersNavigator';
 
-const LoadOrdersScreen = ({ navigation }) => {
-    return (
-        <LoadOrdersNavigator />
-    );
-}
-
-const PackOrdersScreen = ({ navigation }) => {
-    return (
-        <PackOrdersNavigator />
-    );
-}
-
-const SendOrdersScreen = ({ navigation }) => {
-    return (
-        <SendOrdersNavigator />
-    );
-}
-
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, props }) => {
     return (
         <View>
             <View style={styles.buttonContainer}>

@@ -34,7 +34,7 @@ export default function App() {
             <Stack.Screen
               name="Home"
               component={Home}
-              options={{ title: "Title", user: currentUser, headerShown: false }}
+              options={{ title: "Title", currentUser: currentUser, headerShown: false }}
               
             />
             {/* <Stack.Screen
