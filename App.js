@@ -6,6 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './navigation/HomeNavigator';
 import UserSelect from './component/UserSelect';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { removeUser } from './component/AsyncStorage';
+import { Button } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,15 +20,22 @@ export default function App() {
 
   useEffect(() => {
     AsyncStorage.getItem('currentUser').then((value) => {
+      console.log(value)
       if (value) {
         setIsLoggedIn(true);
         setCurrentUser(value);
       } else {
-        setCurrentUser([]);
         setIsLoggedIn(false);
+        setCurrentUser([]);
       }
     });
   }), []
+
+  function logOutHandler() {
+    removeUser();
+    setIsLoggedIn(false);
+    setCurrentUser([]);
+  }
 
   return (
     <NavigationContainer>
@@ -34,10 +43,17 @@ export default function App() {
         {isLoggedIn ? ( //Check logged in
           <>
             <Stack.Screen
-              name="Home"
+              name="Home Screen"
               component={HomeScreen}
-              options={{ title: "Title", headerShown: false }}
-              initialParams={{ currentUser: currentUser, }}
+              options={{
+                title: "Title",
+                headerRight: () => (
+                  <Button
+                    onPress={() => logOutHandler()}
+                    title='Logout'
+                  />
+                )
+              }}
 
             />
           </>

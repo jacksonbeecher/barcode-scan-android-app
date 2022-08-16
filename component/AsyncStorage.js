@@ -13,7 +13,7 @@ export async function getUser() {
 //Remove user data in AsyncStorage ie. Logout
 export async function removeUser() {
     try {
-        await AsyncStorage.removeItem('currentUser')
+        await AsyncStorage.removeItem('currentUser');
     } catch (e) {
         console.log(e);
     }

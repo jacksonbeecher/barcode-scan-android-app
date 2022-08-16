@@ -4,26 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoadOrdersScreen from './load/LoadOrdersNavigator';
 import PackOrdersScreen from './pack/PackOrdersNavigator';
 import SendOrdersScreen from './send/SendOrdersNavigator';
-import UserSelect, { removeUser } from '../component/AsyncStorage';
 
-function logOutHandler(){
-    removeUser();
-}
+
 
 const Home = ({ navigation, route }) => {
     return (
         <View>
-            <View style={styles.buttonContainer}>
-                <Button
-                    style={styles.button}
-                    title="Logout"
-                    onPress={() => {
-                        //Log out
-                        logOutHandler();
-                        //navigation.navigate('Home')
-                    }}
-                />
-            </View>
             <View
                 style={styles.imageContainer}>
                 <Image
@@ -65,7 +51,7 @@ export default function HomeScreen({ navigation, route }) {
             <Stack.Screen
                 name="Home"
                 component={Home}
-                options={{ title: "Title" }}
+                options={{ title: "Title", headerShown: false }}
             />
             <Stack.Screen
                 name="Load Order"
