@@ -1,15 +1,8 @@
 import { useState } from "react";
 import { FlatList, View, Text, StyleSheet, Pressable, Modal, BackHandler, Image } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getUser, removeUser, storeUser} from './AsyncStorage'
 
-export async function getUser() {
-    try {
-        const jsonValue = await AsyncStorage.getItem('currentUser');
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-        console.log(e);
-    }
-};
+
 
 function UserSelect(props) {
     const [selectedUser, setSelectedUserData] = useState([]);
@@ -24,7 +17,6 @@ function UserSelect(props) {
 
     //Assign values to selected user object.
     function selectedUserHandler(data) {
-        //console.log(item);
         setSelectedUserData(data);
 
     }
@@ -32,26 +24,6 @@ function UserSelect(props) {
     function loginHandler() {
         storeUser(selectedUser);
     }
-
-    //Store user data in AsyncStorage ie. Login
-    const asyncstoreUser = async (value) => {
-        try {
-            const jsonValue = JSON.stringify(value);
-            await AsyncStorage.setItem('currentUser', jsonValue);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    //Remove user data in AsyncStorage ie. Logout
-    const removeUser = async () => {
-        try {
-            await AsyncStorage.removeItem('currentUser')
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
 
     return (
         <Modal animationType='slide' visible={props.visible}>

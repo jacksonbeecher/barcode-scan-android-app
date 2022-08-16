@@ -4,8 +4,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoadOrdersScreen from './load/LoadOrdersNavigator';
 import PackOrdersScreen from './pack/PackOrdersNavigator';
 import SendOrdersScreen from './send/SendOrdersNavigator';
+import UserSelect, { removeUser } from '../component/AsyncStorage';
 
-const HomeScreen = ({ navigation, props }) => {
+function logOutHandler(){
+    removeUser();
+}
+
+const Home = ({ navigation, route }) => {
     return (
         <View>
             <View style={styles.buttonContainer}>
@@ -13,8 +18,9 @@ const HomeScreen = ({ navigation, props }) => {
                     style={styles.button}
                     title="Logout"
                     onPress={() => {
-                        alert("Logged out")
-
+                        //Log out
+                        logOutHandler();
+                        //navigation.navigate('Home')
                     }}
                 />
             </View>
@@ -53,12 +59,12 @@ const HomeScreen = ({ navigation, props }) => {
 
 const Stack = createNativeStackNavigator();
 //Home displays menu when logged in. 
-export default function Home({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
     return (
         <Stack.Navigator>
             <Stack.Screen
                 name="Home"
-                component={HomeScreen}
+                component={Home}
                 options={{ title: "Title" }}
             />
             <Stack.Screen
