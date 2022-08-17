@@ -1,41 +1,34 @@
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { View, Text, Button } from 'react-native';
+import styles from '../styles/GetPostStyles';
 
-export default function LoadOrdersScreen() {
+callApi = () => {
+    alert("Load Orders Api Call.")
+}
+
+export default function LoadOrdersScreen({ navigation, route }) {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>This function will load and prepare orders ready for packing.</Text>
             <View style={styles.buttonContainer}>
-                <Button 
-                    style={styles.button}
-                    title="Load"
-                    onPress={() => {
-                        alert("Load Orders")
-                    }}
-                />
-                <Button
-                    style={styles.button}
-                    title="Cancel"
-                    onPress={() => {
-                        alert("backAction")
-                    }}
-                />
+                <View style={styles.button}>
+                    <Button
+                        style={styles.button}
+                        title="Load"
+                        onPress={() => {
+                            callApi();
+                        }}
+                    />
+                </View>
+                <View style={styles.button}>
+                    <Button
+                        style={styles.button}
+                        title="Cancel"
+                        onPress={() => {
+                            alert("backAction")
+                        }}
+                    />
+                </View>
             </View>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-
-    },
-    buttonContainer: {
-
-    },
-    button: {
-
-    },
-    text:{
-        fontSize:16,
-
-    },
-});

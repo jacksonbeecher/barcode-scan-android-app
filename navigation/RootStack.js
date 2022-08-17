@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import LoadOrdersScreen from '../screens/LoadOrdersScreen';
 import PackOrdersScreen from '../screens/PackOrdersScreen';
 import SendOrdersScreen from '../screens/SendOrdersScreen';
-import UserSelect from '../screens/UserSelectModal';
+import UserSelectModal from '../screens/UserSelectModal';
 import HomeScreen from '../screens/HomeScreen';
 
 
@@ -23,7 +23,6 @@ export default function RootStack({ navigation, route }) {
 
     useEffect(() => {
         AsyncStorage.getItem('currentUser').then((value) => {
-            console.log(value)
             if (value) {
                 setIsLoggedIn(true);
                 setCurrentUser(value);
@@ -76,7 +75,7 @@ export default function RootStack({ navigation, route }) {
                     <>
                         <Stack.Screen
                             name="Select User"
-                            component={UserSelect}
+                            component={UserSelectModal}
                         />
                     </>
                 )}
@@ -84,30 +83,3 @@ export default function RootStack({ navigation, route }) {
         </NavigationContainer>
     );
 }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         backgroundColor: '#fff',
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//     },
-//     image: {
-
-//     },
-//     imageContainer: {
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//     },
-//     buttonContainer: {
-
-//     },
-//     button: {
-//         margin: 5,
-
-//     },
-//     title: {
-//         fontSize: 24,
-//         textAlign: 'center',
-//     }
-// });
