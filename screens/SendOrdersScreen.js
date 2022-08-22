@@ -5,7 +5,7 @@ callApi = () => {
     alert("Send Orders Api Call.")
 }
 
-export default function SendOrdersScreen({ navigation, route }) {
+export default function SendOrdersScreen({ navigation: {goBack} }) {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>This function will validate all completed orders on the unit. Those orders will be ready for transfering back to the main system.</Text>
@@ -24,7 +24,7 @@ export default function SendOrdersScreen({ navigation, route }) {
                         style={styles.button}
                         title="Cancel"
                         onPress={() => {
-                            alert("backAction")
+                            goBack()
                         }}
                     />
                 </View>

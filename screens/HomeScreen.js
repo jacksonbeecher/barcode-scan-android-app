@@ -1,16 +1,29 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { getUser } from '../component/AsyncStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({ navigation, route }) => {
+    const [currentUser, setCurrentUser] = React.useState([]);
+
+    React.useEffect(() => {
+        console.log('HomeScreen created')
+        AsyncStorage.getItem('currentUser').then((value) => {
+            //console.log(value.user);
+            setCurrentUser(value);
+        });
+
+    }, []);
+
     return (
         <View>
             <View
-                >
+            >
                 <Image
                     source={require('../assets/images/sample-icon.png')}
                 />
             </View>
-            <Text >Current User: </Text>
+            <Text >Current User: {currentUser}</Text>
             <View >
                 <Button
                     title="Load Order"

@@ -55,7 +55,7 @@ export default function RootStack({ navigation, route }) {
                                         }
                                         title='Logout'
                                     />
-                                )
+                                ),
                             }}
                         />
                         <Stack.Screen

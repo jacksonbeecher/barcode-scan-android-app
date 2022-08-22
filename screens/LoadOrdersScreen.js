@@ -1,11 +1,17 @@
 import { View, Text, Button } from 'react-native';
 import styles from '../styles/GetPostStyles';
+import { getUser } from '../component/AsyncStorage';
+import { useState } from 'react';
 
 callApi = () => {
     alert("Load Orders Api Call.")
 }
 
-export default function LoadOrdersScreen({ navigation, route }) {
+export default function LoadOrdersScreen({ navigation:{goBack} }) {
+    //Get handhelduser id
+    const [userId, setUserId] = useState(0)
+    
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>This function will load and prepare orders ready for packing.</Text>
@@ -24,7 +30,7 @@ export default function LoadOrdersScreen({ navigation, route }) {
                         style={styles.button}
                         title="Cancel"
                         onPress={() => {
-                            alert("backAction")
+                            goBack()
                         }}
                     />
                 </View>
