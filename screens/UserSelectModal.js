@@ -6,77 +6,89 @@ import { getUsersFromApi } from '../component/api';
 function UserSelectModal(props) {
     const [selectedUser, setSelectedUserData] = useState([]);
     const [userDS, setUserDS] = useState([]);
-    const [isLoading, setIsLoading] = useState(false); //Use to hide/show loading anim.
+    const [isLoading, setIsLoading] = useState(false); //Use to hide/show loading animation.
 
     useEffect(() => {
         setIsLoading(true);
         //Load users from Api call.
-        getUsersFromApi().then(data => {
+        async function fetchUserData() {
+            let data = await getUsersFromApi(); //data is in json format.
             setUserDS(data);
-        });
-    
-}, []);
+        }
 
-//Assign values to selected user object.
-function selectedUserHandler(data) {
-    console.log(data);
-    setSelectedUserData(data);
-}
-//Assign user on Login button click.
-function loginHandler() {
-    storeUser(selectedUser);
-}
 
-return (
-    <Modal animationType='slide' visible={props.visible}>
-        <View style={styles.container}>
-            <Text style={styles.title}>Title</Text>
-            <View style={styles.imageContainer}>
-                <Image
-                    style={styles.image}
-                    source={require('../assets/images/sample-icon.png')}
+        fetchUserData();
+        //Clean up useEffect
+        return () => {
+            setIsLoading(false);
+        }
+
+    }, []);
+
+    //Assign values to selected user object.
+    function selectedUserHandler(data) {
+        setSelectedUserData(data);
+    }
+    //Assign user on Login button click.
+    function loginHandler() {
+        if (selectedUser.length !== 0){
+            storeUser(selectedUser);
+        } else {
+            alert("A user must be selected.");
+        }
+        
+    }
+
+    return (
+        <Modal animationType='slide' visible={props.visible}>
+            <View style={styles.container}>
+                <Text style={styles.title}>Title</Text>
+                <View style={styles.imageContainer}>
+                    <Image
+                        style={styles.image}
+                        source={require('../assets/images/sample-icon.png')}
+                    />
+                </View>
+                <Text style={styles.title}>Select your user name from the list and tap Log In to continue</Text>
+                <Text style={styles.text}>Selected User: {selectedUser.UserName}</Text>
+                <FlatList
+                    style={styles.userContainer}
+                    data={userDS}
+                    keyExtractor={(item) => item.UserId}
+                    renderItem={({ item }) =>
+                        <Pressable
+                            android_ripple={{ color: 'dddddd' }}
+                            onPress={() => {
+                                selectedUserHandler(item);
+                            }}>
+                            <Text style={styles.text}>{item.UserCode} - {item.UserName}</Text>
+                        </Pressable>
+                    }
                 />
-            </View>
-            <Text style={styles.title}>Select your user name from the list and tap Log In to continue</Text>
-            <Text style={styles.text}>Selected User: {selectedUser.UserName}</Text>
-            <FlatList
-                style={styles.userContainer}
-                data={userDS}
-                keyExtractor={(item) => item.UserId}
-                renderItem={({ item }) =>
+                <View style={styles.buttonContainer}>
                     <Pressable
                         android_ripple={{ color: 'dddddd' }}
+                        style={styles.button}
                         onPress={() => {
-                            selectedUserHandler(item);
-                        }}>
-                        <Text style={styles.text}>{item.UserCode} - {item.UserName}</Text>
+                            if (selectedUser != undefined) { //Handle null selection.
+                                //props.onLogin(selectedUser)
+                                loginHandler(); //Save User
+                            }
+                        }}
+                    >
+                        <Text style={styles.buttonText}>Log In</Text>
                     </Pressable>
-                }
-            />
-            <View style={styles.buttonContainer}>
-                <Pressable
-                    android_ripple={{ color: 'dddddd' }}
-                    style={styles.button}
-                    onPress={() => {
-                        if (selectedUser != undefined) { //Handle null selection.
-                            //props.onLogin(selectedUser)
-                            loginHandler(); //Save User
-                        }
-                    }}
-                >
-                    <Text style={styles.buttonText}>Log In</Text>
-                </Pressable>
-                {/* <Pressable
+                    {/* <Pressable
                         android_ripple={{ color: 'dddddd' }}
                         style={styles.button}
                         onPress={BackHandler.exitApp}
                     >
                         <Text style={styles.buttonText}>Exit</Text>
                     </Pressable> */}
+                </View>
             </View>
-        </View>
-    </Modal>
-)
+        </Modal>
+    )
 }
 
 export default UserSelectModal;

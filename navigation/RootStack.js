@@ -1,4 +1,4 @@
-import { Button } from 'react-native';
+import { Button, Pressable, Text } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { removeUser } from '../component/AsyncStorage';
@@ -47,7 +47,11 @@ export default function RootStack({ navigation, route }) {
                             name="Home"
                             component={HomeScreen}
                             options={{
-                                title: "Title",
+                                headerLeft: () => {
+                                    <Pressable onPress={logOutHandler}>
+                                        <Text>Settings</Text>
+                                    </Pressable>
+                                },
                                 headerRight: () => (
                                     <Button
                                         onPress={
