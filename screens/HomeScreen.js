@@ -17,8 +17,7 @@ const HomeScreen = ({ navigation, route }) => {
 
     return (
         <View>
-            <View
-            >
+            <View>
                 <Image
                     source={require('../assets/images/sample-icon.png')}
                 />
@@ -40,7 +39,7 @@ const HomeScreen = ({ navigation, route }) => {
                     }
                 />
             </View>
-            <View >
+            <View>
                 <Button
                     title="Send Order"
                     onPress={() =>

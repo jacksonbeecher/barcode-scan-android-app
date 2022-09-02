@@ -1,5 +1,6 @@
-import { Button, Pressable, Text } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { Button, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { Icon } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { removeUser } from '../component/AsyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,6 +12,7 @@ import PackOrdersScreen from '../screens/PackOrdersScreen';
 import SendOrdersScreen from '../screens/SendOrdersScreen';
 import UserSelectModal from '../screens/UserSelectModal';
 import HomeScreen from '../screens/HomeScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -38,29 +40,31 @@ export default function RootStack({ navigation, route }) {
         setIsLoggedIn(false);
         setCurrentUser([]);
     }
+
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName='Select User'>
                 {isLoggedIn ? ( //Check logged in
                     <>
                         <Stack.Screen
                             name="Home"
                             component={HomeScreen}
-                            options={{
-                                headerLeft: () => {
-                                    <Pressable onPress={logOutHandler}>
-                                        <Text>Settings</Text>
-                                    </Pressable>
-                                },
-                                headerRight: () => (
-                                    <Button
-                                        onPress={
-                                            () => logOutHandler()
-                                        }
-                                        title='Logout'
+                            options={({ navigation }) => ({
+                                headerTitleAlign: 'center',
+                                headerLeft: () => (
+                                    <Icon type="ionicon"
+                                        name="settings-outline"
+                                        onPress={() => navigation.navigate('Settings')}
                                     />
                                 ),
-                            }}
+                                headerRight: () => (
+                                    <Icon type="ionicon"
+                                        name="log-out-outline"
+                                        color='red'
+                                        onPress={() => logOutHandler()}
+                                    />
+                                ),
+                            })}
                         />
                         <Stack.Screen
                             name="Load Order"
@@ -74,12 +78,25 @@ export default function RootStack({ navigation, route }) {
                             name="Send Order"
                             component={SendOrdersScreen}
                         />
+                        <Stack.Screen
+                            name="Settings"
+                            component={SettingsScreen}
+                        />
                     </>
                 ) : (
                     <>
                         <Stack.Screen
                             name="Select User"
                             component={UserSelectModal}
+                            options={({ navigation }) => ({
+                                headerTitleAlign: 'center',
+                                headerLeft: () => (
+                                    <Icon type="ionicon"
+                                        name="settings-outline"
+                                        onPress={() => navigation.navigate('Settings')}
+                                    />
+                                ),
+                            })}
                         />
                     </>
                 )}
