@@ -7,41 +7,34 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
     const [open, setOpen] = useState(false); //Dropdownpicker open status.
     const [unit, setUnit] = useState([]);
     const [unitDS, setUnitDS] = useState([]);
-    const [isLoading, setLoading] = useState(false); //Use to hide/show loading animation.
+    const [isLoading, setLoading] = useState(true); //Use to hide/show loading animation.
 
     //Load units from Api call.
-    async function fetchUnitData() {
-        console.log('fetch user data')
-        let data = await getUsersFromApi(); //data is in json format.
-        setUnitDS(data);
-        setLoading(false);
+    const fetchUnitData = async () => {
+        try {
+            let data = await getUnitsFromApi(); //data is in json format.
+            setUnitDS(data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
-
         fetchUnitData();
 
     }, []);
 
 
     return (
-        <Modal animationType='slide'>
+        //<Modal animationType='slide'>
+        <View>
+            <Text>
+                Settings:
+            </Text>
+            <Text>Unit: {unit}</Text>
             <View>
-                <Text>
-                    Settings:
-                </Text>
-                <Text>Unit: {unit}</Text>
-                <DropDownPicker
-                    // open={open}
-                    // value={unit}
-                    // items={unitDS}
-                    // setOpen={setOpen}
-                    //setValue={setUnit}
-                    //setItems={setUnitDS}
-                    listMode="SCROLLVIEW"
-                    //itemKey="UnitId"
-                    closeAfterSelecting={true}
-                />
                 <Button
                     title="Cancel"
                     onPress={() => {
@@ -55,7 +48,28 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
                     }}
                 />
             </View>
-        </Modal>
+
+
+            <DropDownPicker
+                schema={{
+                    label: 'HandHeldCode',
+                    value: 'UnitId'
+                }}
+                open={open}
+                value={unit}
+                items={unitDS}
+                setOpen={setOpen}
+                setValue={setUnit}
+                //setItems={setUnitDS}
+                listMode="SCROLLVIEW"
+                itemKey="UnitId"
+                closeAfterSelecting={true}
+                closeOnBackPressed={true}
+                loading={isLoading}
+            />
+
+        </View>
+        //</Modal>
     );
 }
 

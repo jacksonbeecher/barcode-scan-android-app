@@ -81,6 +81,10 @@ export default function RootStack({ navigation, route }) {
                         <Stack.Screen
                             name="Settings"
                             component={SettingsScreen}
+                            options={({ navigation }) => ({ 
+                                headerTitleAlign: 'center',
+                                
+                            })}
                         />
                     </>
                 ) : (
