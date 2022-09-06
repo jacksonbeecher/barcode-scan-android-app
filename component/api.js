@@ -16,15 +16,13 @@ export const getUsersFromApi = async () => {
         });
 }
 
-export async function getUnitsFromApi() {
-    try {
-        let name = 'units'
-        console.log('http://192.168.0.191:8090/api/' + name);
-        const response = await fetch(url + name)
-        const json = await response.json();
-        console.log(json);
-        return json;
-    } catch (err) {
-        console.log(err);
-    }
+export const getUnitsFromApi = async () => {
+    return fetch(url+'units')
+    .then((response) => response.json())
+    .then((responseJson) => {
+        return responseJson;
+    })
+    .catch((error) => {
+        console.error(error);
+    });
 }

@@ -28,3 +28,21 @@ export const storeUser = async (value) => {
         console.log(e);
     }
 }
+
+export const getUnit = async () => {
+    try {
+        const jsonValue = await AsyncStorage.getItem('currentUnit');
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const storeUnit = async (value) => {
+    try {
+        const jsonValue = JSON.stringify(value);
+        await AsyncStorage.setItem('currentUnit', jsonValue);
+    } catch (e) {
+        console.log(e);
+    }
+}

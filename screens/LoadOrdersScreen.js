@@ -10,7 +10,7 @@ callApi = () => {
 export default function LoadOrdersScreen({ navigation:{goBack} }) {
     //Get handhelduser id
     const [userId, setUserId] = useState(0)
-    
+    //Stop order get if unit data is invalid.
 
     return (
         <View style={styles.container}>

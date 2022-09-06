@@ -1,27 +1,27 @@
-import { useEffect, useState } from "react";
-import { FlatList, View, Text, StyleSheet, Pressable, Modal, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, View, Text, StyleSheet, Pressable, Modal, Image, ActivityIndicator } from "react-native";
 import { getUser, removeUser, storeUser } from '../component/AsyncStorage';
 import { getUsersFromApi } from '../component/api';
 
 function UserSelectModal(props) {
     const [selectedUser, setSelectedUserData] = useState([]);
     const [userDS, setUserDS] = useState([]);
-    const [isLoading, setIsLoading] = useState(false); //Use to hide/show loading animation.
+    const [isLoading, setLoading] = useState(true); //Use to hide/show loading animation.
 
-    useEffect(() => {
-        setIsLoading(true);
-        //Load users from Api call.
-        async function fetchUserData() {
+    //Load users from Api call.
+    const fetchUserData = async () => {
+        try {
             let data = await getUsersFromApi(); //data is in json format.
             setUserDS(data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
+    }
 
-
+    useEffect(() => {
         fetchUserData();
-        //Clean up useEffect
-        return () => {
-            setIsLoading(false);
-        }
 
     }, []);
 
@@ -31,63 +31,64 @@ function UserSelectModal(props) {
     }
     //Assign user on Login button click.
     function loginHandler() {
-        if (selectedUser.length !== 0){
+        if (selectedUser.length !== 0) {
             storeUser(selectedUser);
         } else {
             alert("A user must be selected.");
         }
-        
+
     }
 
     return (
-        <Modal animationType='slide' visible={props.visible}>
-            <View style={styles.container}>
-                <Text style={styles.title}>Title</Text>
-                <View style={styles.imageContainer}>
-                    <Image
-                        style={styles.image}
-                        source={require('../assets/images/sample-icon.png')}
-                    />
-                </View>
-                <Text style={styles.title}>Select your user name from the list and tap Log In to continue</Text>
-                <Text style={styles.text}>Selected User: {selectedUser.UserName}</Text>
-                <FlatList
-                    style={styles.userContainer}
-                    data={userDS}
-                    keyExtractor={(item) => item.UserId}
-                    renderItem={({ item }) =>
-                        <Pressable
-                            android_ripple={{ color: 'dddddd' }}
-                            onPress={() => {
-                                selectedUserHandler(item);
-                            }}>
-                            <Text style={styles.text}>{item.UserCode} - {item.UserName}</Text>
-                        </Pressable>
-                    }
+        // <Modal animationType='slide' visible={props.visible}>
+        <View style={styles.container}>
+            {/* //<Text style={styles.title}>Title</Text> */}
+            <View style={styles.imageContainer}>
+                <Image
+                    style={styles.image}
+                    source={require('../assets/images/sample-icon.png')}
                 />
-                <View style={styles.buttonContainer}>
+            </View>
+            <Text style={styles.title}>Select your user name from the list and tap Log In to continue</Text>
+            <Text style={styles.text}>Selected User: {selectedUser.UserName}</Text>
+            {isLoading && <ActivityIndicator size="large" styles={styles.indicator}>
+            </ActivityIndicator>}
+            {userDS && <FlatList //Considtionally load when user data exists.
+                style={styles.userContainer}
+                data={userDS}
+                keyExtractor={(item) => item.UserId}
+                renderItem={({ item }) =>
                     <Pressable
                         android_ripple={{ color: 'dddddd' }}
-                        style={styles.button}
                         onPress={() => {
-                            if (selectedUser != undefined) { //Handle null selection.
-                                //props.onLogin(selectedUser)
-                                loginHandler(); //Save User
-                            }
-                        }}
-                    >
-                        <Text style={styles.buttonText}>Log In</Text>
+                            selectedUserHandler(item);
+                        }}>
+                        <Text style={styles.text}>{item.UserCode} - {item.UserName}</Text>
                     </Pressable>
-                    {/* <Pressable
+                }
+            />}
+            <View style={styles.buttonContainer}>
+                <Pressable
+                    android_ripple={{ color: 'dddddd' }}
+                    style={styles.button}
+                    onPress={() => {
+                        if (selectedUser != undefined) { //Handle null selection.
+                            loginHandler(); //Save User
+                        }
+                    }}
+                >
+                    <Text style={styles.buttonText}>Log In</Text>
+                </Pressable>
+                {/* <Pressable
                         android_ripple={{ color: 'dddddd' }}
                         style={styles.button}
                         onPress={BackHandler.exitApp}
                     >
                         <Text style={styles.buttonText}>Exit</Text>
                     </Pressable> */}
-                </View>
             </View>
-        </Modal>
+        </View>
+        // </Modal> 
     )
 }
 
@@ -145,4 +146,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
     },
+    indicator: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    }
 })
