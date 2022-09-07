@@ -69,21 +69,30 @@ export default function RootStack({ navigation, route }) {
                         <Stack.Screen
                             name="Load Order"
                             component={LoadOrdersScreen}
+                            options={() => ({
+                                headerTitleAlign: 'center',
+                            })}
                         />
                         <Stack.Screen
                             name="Pack Order"
                             component={PackOrdersScreen}
+                            options={() => ({
+                                headerTitleAlign: 'center',
+                            })}
                         />
                         <Stack.Screen
                             name="Send Order"
                             component={SendOrdersScreen}
+                            options={() => ({
+                                headerTitleAlign: 'center',
+                            })}
                         />
                         <Stack.Screen
                             name="Settings"
                             component={SettingsScreen}
-                            options={({ navigation }) => ({ 
+                            options={({ navigation }) => ({
                                 headerTitleAlign: 'center',
-                                
+
                             })}
                         />
                     </>

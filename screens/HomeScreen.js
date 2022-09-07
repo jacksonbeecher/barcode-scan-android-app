@@ -1,51 +1,56 @@
-import * as React from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import {useEffect, useState} from 'react';
+import { StyleSheet, Text, View, Button, Image,TouchableOpacity } from 'react-native';
 import { getUser } from '../component/AsyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ButtonStyles from '../styles/ButtonStyles';
 
 const HomeScreen = ({ navigation, route }) => {
-    const [currentUser, setCurrentUser] = React.useState([]);
+    const [currentUser, setCurrentUser] = useState([]);
+    const [currentUnit, setCurrentUnit] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         console.log('HomeScreen created')
         AsyncStorage.getItem('currentUser').then((value) => {
             //console.log(value.user);
             setCurrentUser(value);
+        });
+        AsyncStorage.getItem('currentUnit').then((value) => {
+            //console.log(value.user);
+            setCurrentUnit(value);
         });
 
     }, []);
 
     return (
         <View>
-            <View>
+            <View style={styles.imageContainer}>
                 <Image
                     source={require('../assets/images/sample-icon.png')}
                 />
             </View>
             <Text >Current User: {currentUser}</Text>
-            <View >
-                <Button
-                    title="Load Order"
-                    onPress={() =>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                    style={[]}
+                    onPress={() => {
                         navigation.navigate('Load Order')
-                    }
-                />
-            </View>
-            <View >
-                <Button
-                    title="Pack Order"
-                    onPress={() =>
+                    }}>
+                    <Text style={ButtonStyles.text}>Load Order</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[]}
+                    onPress={() => {
                         navigation.navigate('Pack Order')
-                    }
-                />
-            </View>
-            <View>
-                <Button
-                    title="Send Order"
-                    onPress={() =>
+                    }}>
+                    <Text style={ButtonStyles.text}>Pack Order</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[]}
+                    onPress={() => {
                         navigation.navigate('Send Order')
-                    }
-                />
+                    }}>
+                    <Text style={ButtonStyles.text}>Send Order</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -66,35 +71,12 @@ const styles = StyleSheet.create({
 
     },
     buttonContainer: {
-        flexDirection: 'row',
-        textAlign: "center",
-
+        //position: 'relative',
+        
     },
-    button: {
-        flex: 1,
-        borderWidth: 1,
-        borderRadius: 5,
-        width: '20%',
-        textAlign: 'center',
-        alignContent: "center",
-        margin: 5,
-        backgroundColor: '#0080ff',
-    },
-    buttonText: {
-        textAlign: 'center',
-        fontSize: 24,
-
-    },
-    userContainer: {
-        borderWidth: 1,
-        margin: 5,
-        //flex: 3,
-    },
-    selected: {
-
-    },
-    unselected: {
-
+    flexButton:{
+        //margin:20,
+        
     },
     image: {
 

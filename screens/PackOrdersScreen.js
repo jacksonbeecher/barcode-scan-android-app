@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text, FlatList, SafeAreaView, Button, Pressable } from 'react-native';
+import { StyleSheet, View, Image, Text, FlatList, SafeAreaView, Button, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
 import OrderListItem  from '../component/OrderListItem';
+import ButtonStyles from '../styles/ButtonStyles';
 
 //Pack Order Structure - PackOrderScreen(Select Order) -> PickOrderScreen(Details of selected orders) -> PackItemsScreen (Lines of Selected orders, Scan products to pick.) -> PackProducts -> Packaging -> Carrier Details 
 const PackOrdersScreen = ({ navigation: { goBack } }) => {
@@ -45,24 +46,22 @@ const PackOrdersScreen = ({ navigation: { goBack } }) => {
                     }}
                     alwaysBounceVertical={false}
                 />
-
             </View>
             <View style={styles.buttonContainer}>
-                <View style={styles.button}>
-                    <Button
-                        title="Select"
-                        onPress={() => {
-                        }}
-                    />
-                </View>
-                <View style={styles.button}>
-                    <Button
-                        title="Cancel"
-                        onPress={() => {
-                            goBack()
-                        }}
-                    />
-                </View>
+                <TouchableOpacity
+                    style={ButtonStyles.button}
+                    onPress={() => {
+                        goBack()
+                    }}>
+                    <Text style={ButtonStyles.text}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={ButtonStyles.button}
+                    onPress={() => {
+                        alert("Selected order.");
+                    }}>
+                    <Text style={ButtonStyles.text}>Select</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
