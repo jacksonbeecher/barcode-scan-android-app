@@ -26,3 +26,14 @@ export const getUnitsFromApi = async () => {
         console.error(error);
     });
 }
+
+export const getUnitFromApi = async (id) => {
+    return fetch(url+'units/'+id)
+    .then((response) => response.json())
+    .then((responseJson) => {
+        return responseJson;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
