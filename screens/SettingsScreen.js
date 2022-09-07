@@ -3,6 +3,7 @@ import { View, Modal, Text, Button, StyleSheet, TouchableOpacity } from "react-n
 import DropDownPicker from "react-native-dropdown-picker";
 import { getUnitFromApi, getUnitsFromApi } from '../component/api';
 import { storeUnit } from "../component/AsyncStorage";
+import ButtonStyles from "../styles/ButtonStyles";
 
 const SaveButtonHandler = async (unitId) => {
     let data = await getUnitFromApi(unitId);
@@ -42,16 +43,20 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
         <View>
             <Text>Unit: {unitValue}</Text>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.saveButton} onPress={() => { goBack() }}>
-                    <Text style={styles.buttons}>Cancel</Text>
+                <TouchableOpacity
+                    style={ButtonStyles.button}
+                    onPress={() => { 
+                        goBack() 
+                    }}>
+                    <Text style={ButtonStyles.text}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={styles.saveButton}
+                    style={ButtonStyles.button}
                     onPress={() => {
                         SaveButtonHandler(unitValue);
                         goBack();
                     }}>
-                    <Text style={styles.buttons}>Save</Text>
+                    <Text style={ButtonStyles.text}>Save</Text>
                 </TouchableOpacity>
             </View>
 
@@ -86,19 +91,5 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 100,
 
-    },
-    buttons: {
-        backgroundColor: "#5188E3",
-        color: "white",
-        textAlign: "center",
-        marginHorizontal: 60,
-        paddingVertical: 15,
-        borderRadius: 50,
-        marginTop: 20,
-    },
-    saveButton: {
-        flex: 1,
-        justifyContent: "flex-end",
-        marginBottom: 10,
     },
 })
