@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, View, Text, StyleSheet, Pressable, Modal, Image, ActivityIndicator } from "react-native";
-import { getUser, removeUser, storeUser } from '../component/AsyncStorage';
+import { getUser, removeUser, storeUser } from '../component/storage';
 import { getUsersFromApi } from '../component/api';
 
 function UserSelectModal(props) {
@@ -49,24 +49,26 @@ function UserSelectModal(props) {
                     source={require('../assets/images/sample-icon.png')}
                 />
             </View>
-            <Text style={styles.title}>Select your user name from the list and tap Log In to continue</Text>
-            <Text style={styles.text}>Selected User: {selectedUser.UserName}</Text>
-            {isLoading && <ActivityIndicator size="large" styles={styles.indicator}>
-            </ActivityIndicator>}
-            {userDS && <FlatList //Considtionally load when user data exists.
-                style={styles.userContainer}
-                data={userDS}
-                keyExtractor={(item) => item.UserId}
-                renderItem={({ item }) =>
-                    <Pressable
-                        android_ripple={{ color: 'dddddd' }}
-                        onPress={() => {
-                            selectedUserHandler(item);
-                        }}>
-                        <Text style={styles.text}>{item.UserCode} - {item.UserName}</Text>
-                    </Pressable>
-                }
-            />}
+            <View style = {styles.userSelectContainer}> 
+                <Text style={styles.title}>Select your user name from the list and tap Log In to continue</Text>
+                <Text style={styles.text}>Selected User: {selectedUser.UserName}</Text>
+                {isLoading && <ActivityIndicator size="large" styles={styles.indicator}>
+                </ActivityIndicator>}
+                {userDS && <FlatList //Considtionally load when user data exists.
+                    style={styles.userContainer}
+                    data={userDS}
+                    keyExtractor={(item) => item.UserId}
+                    renderItem={({ item }) =>
+                        <Pressable
+                            android_ripple={{ color: 'dddddd' }}
+                            onPress={() => {
+                                selectedUserHandler(item);
+                            }}>
+                            <Text style={styles.text}>{item.UserCode} - {item.UserName}</Text>
+                        </Pressable>
+                    }
+                />}
+            </View> 
             <View style={styles.buttonContainer}>
                 <Pressable
                     android_ripple={{ color: 'dddddd' }}
@@ -96,7 +98,7 @@ export default UserSelectModal;
 
 const styles = StyleSheet.create({
     container: {
-        //flex:1,
+        flex:1,
     },
     text: {
         fontSize: 20,
@@ -106,11 +108,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
 
     },
+    //Main three sub flex boxes.
+    imageContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        flex: 1,
+    },
+    userSelectContainer : {
+        flex: 6,
+    },
     buttonContainer: {
         flexDirection: 'row',
         textAlign: "center",
-
+        flex: 1,
     },
+    //
     button: {
         flex: 1,
         borderWidth: 1,
@@ -139,12 +152,9 @@ const styles = StyleSheet.create({
 
     },
     image: {
-
-    },
-    imageContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
+        flex: 1,
+        aspectRatio: 1,
+        resizeMode: 'contain',
     },
     indicator: {
         position: 'absolute',

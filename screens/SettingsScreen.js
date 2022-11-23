@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { View, Modal, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { getUnitFromApi, getUnitsFromApi } from '../component/api';
-import { storeUnit } from "../component/AsyncStorage";
+import { storeUnit } from "../component/storage";
 import ButtonStyles from "../styles/ButtonStyles";
 
 const SaveButtonHandler = async (unitId) => {
@@ -41,12 +41,33 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
     return (
         //<Modal animationType='slide'>
         <View>
-            <Text>Unit: {unitValue}</Text>
+            <View>
+                <Text>Unit: {unitValue}</Text>
+
+
+                <DropDownPicker
+                    schema={{
+                        label: 'HandHeldCode',
+                        value: 'UnitId'
+                    }}
+                    open={unitOpen}
+                    value={unitValue}
+                    items={unitDS}
+                    setOpen={setUnitOpen}
+                    setValue={setUnitValue}
+                    setItems={setUnitDS}
+                    listMode="SCROLLVIEW"
+                    itemKey="UnitId"
+                    closeAfterSelecting={true}
+                    closeOnBackPressed={true}
+                    loading={isLoading}
+                />
+            </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={ButtonStyles.button}
-                    onPress={() => { 
-                        goBack() 
+                    onPress={() => {
+                        goBack()
                     }}>
                     <Text style={ButtonStyles.text}>Cancel</Text>
                 </TouchableOpacity>
@@ -59,25 +80,6 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
                     <Text style={ButtonStyles.text}>Save</Text>
                 </TouchableOpacity>
             </View>
-
-            <DropDownPicker
-                schema={{
-                    label: 'HandHeldCode',
-                    value: 'UnitId'
-                }}
-                open={unitOpen}
-                value={unitValue}
-                items={unitDS}
-                setOpen={setUnitOpen}
-                setValue={setUnitValue}
-                setItems={setUnitDS}
-                listMode="SCROLLVIEW"
-                itemKey="UnitId"
-                closeAfterSelecting={true}
-                closeOnBackPressed={true}
-                loading={isLoading}
-            />
-
         </View>
         //</Modal>
     );

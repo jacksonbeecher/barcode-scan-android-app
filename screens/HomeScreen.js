@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Button, Image,TouchableOpacity } from 'react-native';
-import { getUser } from '../component/AsyncStorage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getUser, getUnit } from '../component/storage';
 import ButtonStyles from '../styles/ButtonStyles';
 
 const HomeScreen = ({ navigation, route }) => {
@@ -10,11 +9,11 @@ const HomeScreen = ({ navigation, route }) => {
 
     useEffect(() => {
         console.log('HomeScreen created')
-        AsyncStorage.getItem('currentUser').then((value) => {
+        getUser().then((value) => {
             //console.log(value.user);
             setCurrentUser(value);
         });
-        AsyncStorage.getItem('currentUnit').then((value) => {
+        getUnit().then((value) => {
             //console.log(value.user);
             setCurrentUnit(value);
         });

@@ -2,8 +2,7 @@ import { Button, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { removeUser } from '../component/AsyncStorage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { removeUser, getUser } from '../component/storage';
 import { useState, useEffect } from 'react';
 
 //Screens
@@ -24,7 +23,7 @@ export default function RootStack({ navigation, route }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
-        AsyncStorage.getItem('currentUser').then((value) => {
+        getUser().then((value) => {
             if (value) {
                 setIsLoggedIn(true);
                 setCurrentUser(value);

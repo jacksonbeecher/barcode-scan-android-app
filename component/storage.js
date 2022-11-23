@@ -1,7 +1,9 @@
 // Handle local storage and persistance.
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export async function getUser() {
+//USERSSTORAGE
+//Get User
+export const getUser = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem('currentUser');
         return jsonValue != null ? JSON.parse(jsonValue) : null;
@@ -11,7 +13,7 @@ export async function getUser() {
 };
 
 //Remove user data in AsyncStorage ie. Logout
-export async function removeUser() {
+export const removeUser = async () => {
     try {
         await AsyncStorage.removeItem('currentUser');
     } catch (e) {
@@ -28,7 +30,8 @@ export const storeUser = async (value) => {
         console.log(e);
     }
 }
-
+//UNITSTORAGE
+//Get unit
 export const getUnit = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem('currentUnit');
@@ -37,7 +40,7 @@ export const getUnit = async () => {
         console.log(e);
     }
 };
-
+//Store unit
 export const storeUnit = async (value) => {
     try {
         const jsonValue = JSON.stringify(value);
@@ -46,3 +49,23 @@ export const storeUnit = async (value) => {
         console.log(e);
     }
 }
+
+
+//ORDERSTORAGE
+export const storeOrders = async (value) => {
+    try {
+        const jsonValue = JSON.stringify(value);
+        await AsyncStorage.setItem('currentOrders', jsonValue);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const getOrders = async () => {
+    try {
+        const jsonValue = await AsyncStorage.getItem('currentOrders');
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+        console.log(e);
+    }
+};
