@@ -8,20 +8,28 @@ const HomeScreen = ({ navigation, route }) => {
     const [currentUnit, setCurrentUnit] = useState([]);
 
     useEffect(() => {
+        getData();
+        return () => { //Clear on unmount to avoid memory leaks. 
+            setCurrentUser({});
+            setCurrentUnit({});
+        }
+
+
+    }, []);
+
+    const getData = () => {
         console.log('HomeScreen created')
         getUser().then((value) => {
-            console.log(value);
+            //console.log(value);
             setCurrentUser(value);
         });
         getUnit().then((value) => {
-            console.log("Get Unit");
-            console.log(value);
+            //console.log(value);
             if(value){ //Set if value is found.
                 setCurrentUnit(value);
             }
         });
-
-    }, []);
+    }
 
     return (
         <View style={styles.container}>
