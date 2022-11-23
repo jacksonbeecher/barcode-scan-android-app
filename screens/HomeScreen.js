@@ -10,7 +10,7 @@ const HomeScreen = ({ navigation, route }) => {
     useEffect(() => {
         getData();
         const willFocusSub = navigation.addListener('focus', () => {
-            console.log("Home Focus.")
+            //console.log("Home Focus.")
             getData();
         });
 
@@ -22,10 +22,6 @@ const HomeScreen = ({ navigation, route }) => {
 
     }, []);
 
-    // useEffect(() => {
-
-    // })
-
     const getData = () => {
         //console.log('HomeScreen created')
         getUser().then((value) => {
@@ -35,7 +31,6 @@ const HomeScreen = ({ navigation, route }) => {
         getUnit().then((value) => {
             //console.log(value);
             if(value){ //Set if value is found.
-                console.log("Get Unit");
                 setCurrentUnit(value);
             }
         });
@@ -103,6 +98,9 @@ const styles = StyleSheet.create({
         flex: 6,
     },
     //
+    button:{
+
+    },
     text: {
         fontSize: 20,
     },

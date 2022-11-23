@@ -5,12 +5,11 @@ import { getUnitFromApi, getUnitsFromApi } from '../component/api';
 import { getUnit, storeUnit } from "../component/storage";
 import ButtonStyles from "../styles/ButtonStyles";
 
-const SaveButtonHandler = async (unitId) => {
+const SaveButtonHandler = async (unitId, goBack) => {
     let data = await getUnitFromApi(unitId);
     //Save unit to asyncstorage
-    console.log("Store Unit")
     await storeUnit(data);
-
+    goBack(); //Call goBack here because the previous screen is focused before unitData is stored. 
 }
 
 const SettingsScreen = ({ navigation: { goBack } }) => {
@@ -86,9 +85,7 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
                 <TouchableOpacity
                     style={[]}
                     onPress={() => {
-                        SaveButtonHandler(unitValue);
-                        console.log("goBack");
-                        //goBack();
+                        SaveButtonHandler(unitValue, goBack); //Pass goBack object. Do not call goback after this function as the data is not visually updated when the screen loads. 
                     }}>
                     <Text style={ButtonStyles.text}>Save</Text>
                 </TouchableOpacity>
