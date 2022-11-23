@@ -23,6 +23,10 @@ export default function RootStack({ navigation, route }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
+        fetchData();
+    }), []
+
+    const fetchData = () => {
         getUser().then((value) => {
             if (value) {
                 setIsLoggedIn(true);
@@ -32,7 +36,7 @@ export default function RootStack({ navigation, route }) {
                 setCurrentUser([]);
             }
         });
-    }), []
+    }
 
     function logOutHandler() {
         removeUser();

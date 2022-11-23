@@ -10,11 +10,11 @@ const HomeScreen = ({ navigation, route }) => {
     useEffect(() => {
         console.log('HomeScreen created')
         getUser().then((value) => {
-            //console.log(value.user);
+            console.log(value);
             setCurrentUser(value);
         });
         getUnit().then((value) => {
-            //console.log(value.user);
+            //console.log(value);
             setCurrentUnit(value);
         });
 
@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation, route }) => {
                     source={require('../assets/images/sample-icon.png')}
                 />
             </View>
-            <Text >Current User: {currentUser}</Text>
+            <Text >Current User: {currentUser.UserName}</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={[]}
