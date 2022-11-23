@@ -14,20 +14,28 @@ const HomeScreen = ({ navigation, route }) => {
             setCurrentUser(value);
         });
         getUnit().then((value) => {
-            //console.log(value);
-            setCurrentUnit(value);
+            console.log("Get Unit");
+            console.log(value);
+            if(value){ //Set if value is found.
+                setCurrentUnit(value);
+            }
         });
 
     }, []);
 
     return (
-        <View>
+        <View style={styles.container}>
             <View style={styles.imageContainer}>
                 <Image
+                    style={styles.image}
                     source={require('../assets/images/sample-icon.png')}
                 />
             </View>
-            <Text >Current User: {currentUser.UserName}</Text>
+            <View style={styles.infoContainer}>
+                <Text>User: {currentUser.UserName}</Text>
+                <Text>Unit: {currentUnit.HandHeldCode}</Text>
+            </View>
+            
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={[]}
@@ -59,7 +67,21 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {
-        //flex:1,
+        flex:1,
+    },
+    //Sub flex boxes.
+    imageContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        flex: 1,
+    },
+    infoContainer:{
+        flex: 1,
+    },
+    buttonContainer: {
+        //position: 'relative',
+        flex: 6,
     },
     text: {
         fontSize: 20,
@@ -69,20 +91,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
 
     },
-    buttonContainer: {
-        //position: 'relative',
-        
-    },
     flexButton:{
         //margin:20,
         
     },
     image: {
+        flex: 1,
+        aspectRatio: 1,
+        resizeMode: 'contain',
+    },
 
-    },
-    imageContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
 })

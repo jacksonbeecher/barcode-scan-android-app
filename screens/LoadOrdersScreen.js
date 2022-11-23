@@ -13,11 +13,11 @@ export default function LoadOrdersScreen({ navigation: { goBack } }) {
 
     useEffect(() => {
         //Load Unit to pass id into load query.
-        getUnit.then((value) => {
+        getUnit().then((value) => {
             console.log(value);
             setUnit(value);
         });
-        getOrders.then((value) => {
+        getOrders().then((value) => {
             //console.log(value);
             setOrders(value);
         });
