@@ -23,7 +23,6 @@ const UserSelectModal = ({props}) => {
 
     useEffect(() => {
         fetchUserData();
-        console.log("fetchUserData");
         return () => {
             //setUserDS({}); //Clear on unmount.
         }
@@ -40,7 +39,6 @@ const UserSelectModal = ({props}) => {
 
     //Assign values to selected user object.
     function selectedUserHandler(data) {
-        console.log("Set user data")
         setSelectedUserData(data);
     }
     //Assign user on Login button click.

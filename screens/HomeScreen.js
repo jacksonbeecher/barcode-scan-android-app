@@ -9,15 +9,25 @@ const HomeScreen = ({ navigation, route }) => {
 
     useEffect(() => {
         getData();
-        return () => { //Clear on unmount to avoid memory leaks. 
-            setCurrentUser({});
-            setCurrentUnit({});
-        }
+        const willFocusSub = navigation.addListener('focus', () => {
+            console.log("Home Focus.")
+            getData();
+        });
+
+        return willFocusSub;
+        // return () => { //Clear on unmount to avoid memory leaks. 
+        //     setCurrentUser({});
+        //     setCurrentUnit({});
+        // }
 
     }, []);
 
+    // useEffect(() => {
+
+    // })
+
     const getData = () => {
-        console.log('HomeScreen created')
+        //console.log('HomeScreen created')
         getUser().then((value) => {
             //console.log(value);
             setCurrentUser(value);
@@ -25,6 +35,7 @@ const HomeScreen = ({ navigation, route }) => {
         getUnit().then((value) => {
             //console.log(value);
             if(value){ //Set if value is found.
+                console.log("Get Unit");
                 setCurrentUnit(value);
             }
         });

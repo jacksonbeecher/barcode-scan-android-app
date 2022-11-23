@@ -43,6 +43,7 @@ export const getUnit = async () => {
 //Store unit
 export const storeUnit = async (value) => {
     try {
+        console.log(value)
         const jsonValue = JSON.stringify(value);
         await AsyncStorage.setItem('currentUnit', jsonValue);
     } catch (e) {

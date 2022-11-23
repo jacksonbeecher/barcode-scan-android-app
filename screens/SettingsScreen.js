@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { View, Modal, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { getUnitFromApi, getUnitsFromApi } from '../component/api';
-import { storeUnit } from "../component/storage";
+import { getUnit, storeUnit } from "../component/storage";
 import ButtonStyles from "../styles/ButtonStyles";
 
 const SaveButtonHandler = async (unitId) => {
     let data = await getUnitFromApi(unitId);
     //Save unit to asyncstorage
-    storeUnit(data);
+    console.log("Store Unit")
+    await storeUnit(data);
 
 }
 
@@ -25,6 +26,15 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
         try {
             let data = await getUnitsFromApi(); //data is in json format.
             setUnitDS(data);
+            
+            //Check settings for currently selected Unit. 
+            getUnit().then((value) => {
+                //console.log(value);
+                if(value){
+                    setUnitValue(value.UnitId);
+                }
+            });
+
         } catch (error) {
             console.error(error);
         } finally {
@@ -40,42 +50,45 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
 
     return (
         //<Modal animationType='slide'>
-        <View>
-            <View>
-                <Text>Unit: {unitValue}</Text>
-
-
-                <DropDownPicker
-                    schema={{
-                        label: 'HandHeldCode',
-                        value: 'UnitId'
-                    }}
-                    open={unitOpen}
-                    value={unitValue}
-                    items={unitDS}
-                    setOpen={setUnitOpen}
-                    setValue={setUnitValue}
-                    setItems={setUnitDS}
-                    listMode="SCROLLVIEW"
-                    itemKey="UnitId"
-                    closeAfterSelecting={true}
-                    closeOnBackPressed={true}
-                    loading={isLoading}
-                />
+        <View style = {styles.container}>
+            <View style = {styles.settingsContainer}>
+                <View style={styles.setting}>
+                    <Text style={styles.settingLabel}>Unit: </Text>
+                    <View style = {styles.settingpicker}>
+                        <DropDownPicker
+                            schema={{
+                                label: 'HandHeldCode',
+                                value: 'UnitId'
+                            }}
+                            open={unitOpen}
+                            value={unitValue}
+                            items={unitDS}
+                            setOpen={setUnitOpen}
+                            setValue={setUnitValue}
+                            setItems={setUnitDS}
+                            listMode="SCROLLVIEW"
+                            itemKey="UnitId"
+                            closeAfterSelecting={true}
+                            closeOnBackPressed={true}
+                            loading={isLoading}
+                        />
+                    </View>
+                </View>
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                    style={ButtonStyles.button}
+                    style={[]}
                     onPress={() => {
                         goBack()
                     }}>
                     <Text style={ButtonStyles.text}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={ButtonStyles.button}
+                    style={[]}
                     onPress={() => {
                         SaveButtonHandler(unitValue);
-                        goBack();
+                        console.log("goBack");
+                        //goBack();
                     }}>
                     <Text style={ButtonStyles.text}>Save</Text>
                 </TouchableOpacity>
@@ -88,10 +101,30 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
 export default SettingsScreen;
 
 const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+    },
+    //Sub flex containers
+    settingsContainer: {
+        flex:6, 
+        margin:5,
+    },
     buttonContainer: {
+        flex: 2,
         flexDirection: 'row',
-        position: "absolute",
-        top: 100,
+    },
+    setting: {
+        flexDirection: 'row',
+    },
+    settingLabel: {
+        fontSize: 20,
+        flex: 1,
+        alignContent:'center',
+        justifyContent: 'center',
 
     },
+    settingpicker : {
+        flex: 3,
+    }, 
+
 })
