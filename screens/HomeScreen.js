@@ -14,7 +14,6 @@ const HomeScreen = ({ navigation, route }) => {
             setCurrentUnit({});
         }
 
-
     }, []);
 
     const getData = () => {
@@ -85,12 +84,14 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     infoContainer:{
+        justifyContent: 'center',
+        alignItems: 'center',
         flex: 1,
     },
     buttonContainer: {
-        //position: 'relative',
         flex: 6,
     },
+    //
     text: {
         fontSize: 20,
     },
@@ -99,14 +100,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
 
     },
-    flexButton:{
-        //margin:20,
-        
-    },
     image: {
         flex: 1,
         aspectRatio: 1,
         resizeMode: 'contain',
     },
-
 })
