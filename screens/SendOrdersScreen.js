@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../styles/GetPostStyles';
+import GetPostStyles from '../styles/GetPostStyles';
 import ButtonStyles from '../styles/ButtonStyles';
 
 callApi = () => {
@@ -8,8 +8,8 @@ callApi = () => {
 
 export default function SendOrdersScreen({ navigation: {goBack} }) {
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>This function will validate all completed orders on the unit. Those orders will be ready for transfering back to the main system.</Text>
+        <View style={[]}>
+            <Text style={GetPostStyles.text}>This function will validate all completed orders on the unit. Those orders will be ready for transfering back to the main system.</Text>
             {/* <View style={styles.buttonContainer}>
                 <View style={styles.button}>
                     <Button
@@ -30,20 +30,20 @@ export default function SendOrdersScreen({ navigation: {goBack} }) {
                     />
                 </View>
             </View> */}
-            <View style={styles.buttonContainer}>
+            <View style={[]}>
                 <TouchableOpacity
-                    style={ButtonStyles.button}
+                    style={[]}
                     onPress={() => {
                         goBack()
                     }}>
-                    <Text style={ButtonStyles.text}>Cancel</Text>
+                    <Text style={ButtonStyles.buttonText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={ButtonStyles.button}
+                    style={[]}
                     onPress={() => {
                         callApi();
                     }}>
-                    <Text style={ButtonStyles.text}>Send</Text>
+                    <Text style={ButtonStyles.buttonText}>Send</Text>
                 </TouchableOpacity>
             </View>
         </View>

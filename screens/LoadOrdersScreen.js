@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../styles/GetPostStyles';
+import GetPostStyles from '../styles/GetPostStyles';
 import { getUnit, getOrders} from '../component/storage';
 import { useState, useEffect } from 'react';
 import ButtonStyles from '../styles/ButtonStyles';
@@ -17,10 +17,10 @@ export default function LoadOrdersScreen({ navigation: { goBack } }) {
             console.log(value);
             setUnit(value);
         });
-        getOrders().then((value) => {
-            //console.log(value);
-            setOrders(value);
-        });
+        // getOrders().then((value) => {
+        //     //console.log(value);
+        //     setOrders(value);
+        // });
 
     }, []);
 
@@ -37,26 +37,30 @@ export default function LoadOrdersScreen({ navigation: { goBack } }) {
         //let data = await getUnitFromApi(unitId);
         //Save unit to asyncstorage
         //storeUnit(data);
+
+        let data = await getOrdersFromApi()
     
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>This function will load and prepare orders ready for packing.</Text>
-            <View style={styles.buttonContainer}>
+        <View style={[]}>
+            <View style={[]}>
+                <Text style={GetPostStyles.text}>This function will load and prepare orders ready for packing.</Text>
+            </View>
+            <View style={[]}>
                 <TouchableOpacity
-                    style={ButtonStyles.button}
+                    style={[]}
                     onPress={() => {
                         goBack()
                     }}>
-                    <Text style={ButtonStyles.text}>Cancel</Text>
+                    <Text style={ButtonStyles.buttonText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={ButtonStyles.button}
+                    style={[]}
                     onPress={() => {
                         LoadButtonHandler();
                     }}>
-                    <Text style={ButtonStyles.text}>Load</Text>
+                    <Text style={ButtonStyles.buttonText}>Load</Text>
                 </TouchableOpacity>
             </View>
         </View>

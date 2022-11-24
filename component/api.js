@@ -37,3 +37,7 @@ export const getUnitFromApi = async (id) => {
         console.log(error);
     });
 }
+
+export const getOrdersFromApi = async() => {
+    return fetch
+}

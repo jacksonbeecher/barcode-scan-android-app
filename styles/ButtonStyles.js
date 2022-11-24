@@ -6,8 +6,12 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: "flex-end",
         marginBottom: 10,
+        width:'100%',
+        alignSelf:'center',
+        //flexWrap:'wrap',
+
     },
-    text:{
+    buttonText:{
         backgroundColor: "#5188E3",
         color: "white",
         textAlign: "center",
