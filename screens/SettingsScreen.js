@@ -74,20 +74,20 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
                     </View>
                 </View>
             </View>
-            <View style={styles.buttonContainer}>
+            <View style={[]}>
                 <TouchableOpacity
                     style={[]}
                     onPress={() => {
                         goBack()
                     }}>
-                    <Text style={ButtonStyles.text}>Cancel</Text>
+                    <Text style={ButtonStyles.buttonText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[]}
                     onPress={() => {
                         SaveButtonHandler(unitValue, goBack); //Pass goBack object. Do not call goback after this function as the data is not visually updated when the screen loads. 
                     }}>
-                    <Text style={ButtonStyles.text}>Save</Text>
+                    <Text style={ButtonStyles.buttonText}>Save</Text>
                 </TouchableOpacity>
             </View>
         </View>

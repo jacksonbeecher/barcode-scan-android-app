@@ -38,6 +38,14 @@ export const getUnitFromApi = async (id) => {
     });
 }
 
-export const getOrdersFromApi = async() => {
-    return fetch
+//Load Orders Screen
+export const getOrdersFromApiWithUnitIdAndNoOrders = async() => {
+    return fetch(url)
+    .then((response) => response.json())
+    .then((responseJson)=> {
+        return responseJson;
+    })
+    .catch((error) => {
+        console.log(error);
+    })
 }
