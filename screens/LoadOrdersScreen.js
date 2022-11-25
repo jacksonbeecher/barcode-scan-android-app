@@ -1,6 +1,6 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import GetPostStyles from '../styles/GetPostStyles';
-import { getUnit, getOrders} from '../component/storage';
+import { getUnit, getOrders, storeOrders} from '../component/storage';
 import { useState, useEffect } from 'react';
 import ButtonStyles from '../styles/ButtonStyles';
 import { getOrdersFromApiWithPoolIdAndNoOrders } from '../component/api';
@@ -23,12 +23,11 @@ export default function LoadOrdersScreen({ navigation: { goBack } }) {
     const fetchDeviceData= async () => {
         getOrders().then((value) => {
             if (value){
-                setOrders(value)
+                setOrders(value);
             }
         });
         //Load Unit to pass id into load query.
         getUnit().then((value) => {
-            console.log(value);
             setUnit(value);
             setOrderQty(value.MaxOrder)
         });
@@ -45,12 +44,14 @@ export default function LoadOrdersScreen({ navigation: { goBack } }) {
             console.log(data);
             if(data){
                 setOrders(data);
+                storeOrders(data);
             } else {
                 alert("No orders alloacted to this device.");
             }
             
         }
         setLoading(false);
+        
     }
 
 
@@ -59,6 +60,11 @@ export default function LoadOrdersScreen({ navigation: { goBack } }) {
             <View style={[]}>
                 <Text style={GetPostStyles.text}>This function will load and prepare orders ready for packing.</Text>
             </View>
+            {loading && 
+                <View style={GetPostStyles.indicator}>
+                    <ActivityIndicator size = 'large' />
+                </View>
+            }
             <View style={[]}>
                 <TouchableOpacity
                     style={[]}

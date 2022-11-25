@@ -18,6 +18,6 @@ export default StyleSheet.create({
         marginHorizontal: 60,
         paddingVertical: 15,
         borderRadius: 50,
-        marginTop: 20,
+        marginVertical: 10,
     },
 })

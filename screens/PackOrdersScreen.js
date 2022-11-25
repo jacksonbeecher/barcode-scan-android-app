@@ -4,56 +4,96 @@ import { useState, useEffect } from 'react';
 import OrderListItem  from '../component/OrderListItem';
 import ButtonStyles from '../styles/ButtonStyles';
 import { getOrders } from '../component/storage';
+import { Icon } from '@rneui/themed';
+import PackItemsScreen from './PackItemsScreen';
+
+const ListItem = ({ item, onPress, style}) => (
+    <TouchableOpacity onPress={onPress} style = {[styles.listItem, style]}>
+        <Text style={styles.listCell}>{item.OrderNo}</Text>
+        {/* <Text style={styles.listCell}>{item.Customer}</Text> */}
+        <Text style={styles.listCell}>{item.Reference}</Text>
+        <Icon style={[]} type="ionicon" name="chevron-forward-outline"/>
+    </TouchableOpacity>
+);
 
 //Pack Order Structure - PackOrderScreen(Select Order) -> PickOrderScreen(Details of selected orders) -> PackItemsScreen (Lines of Selected orders, Scan products to pick.) -> PackProducts -> Packaging -> Carrier Details 
-const PackOrdersScreen = ({ navigation: { goBack } }) => {
-    const [dataSource, setDataSource] = useState([]); //Order data in JSON format.
-    const [isLoaded, setIsLoaded] = useState(false)
+const PackOrdersScreen = ({ navigation}) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [refresh, setRefresh] = useState(false);
     const [orderDS, setOrderDs] = useState([]);
-
-    let orders = [
-        { id: 1, orderNo: '300905', customer: "Demo", date: "01/10/2014" },
-        { id: 2, orderNo: '124356', customer: "Demo", date: "01/10/2014" },
-        { id: 3, orderNo: '123457', customer: "Demo", date: "01/10/2014" },
-        { id: 4, orderNo: '123458', customer: "Demo", date: "01/10/2014" },
-        { id: 5, orderNo: '300909', customer: "Demo", date: "01/10/2014" },
-    ];
-    
+    const [selected, setSelected] = useState([]);
 
     useEffect(() => {
         if (isLoaded === false) {
-            getOrders().then((value) => {
-                console.log(value);
-                setOrderDs(value);
-            });
-            //setDataSource(orders);
+            GetOrderData();
         }
 
     }, [isLoaded]);
+
+    const GetOrderData = () => {
+        getOrders().then((value) => {
+            setOrderDs(value);
+        });
+    }
+
+    const renderHeader = () => {
+        return (
+            <View>
+                <Text style={styles.header}>Orders</Text>
+            </View>
+        );
+    }
+
+    const renderSeparator = () => {
+        return <View style={styles.itemSeparator}></View>;
+    };
+
+    const emptyListView = () => {
+        return (
+          <View>
+            <Text>No records found.</Text>
+          </View>
+        );
+    };
+
+    const renderItem = ({item}) => {
+        const backgroundColor = item.OrderId === selected.OrderId ? "#6e3b6e" : "#f9c2ff";
+        const color = item.OrderId === selected.OrderId ? 'white' : 'black';
+        return (
+            <ListItem
+                item={item}
+                onPress={() => {
+                    /* 1. Navigate to the Details route with params */
+                    navigation.navigate('PackItemsScreen', {item});
+                }}
+                backgroundColor={{ backgroundColor }}
+                textColor = {{ color }}
+            />
+        );
+    }
 
     return (
         <SafeAreaView>
             <View style={styles.container}>
                 <View style={styles.orderContainer}>
-                <Text>Pack Order: </Text>
+                    <View style = {styles.listItem}>
+                        <Text style={styles.listCell}>OrderNo</Text>
+                        <Text style={styles.listCell}>Referen</Text>
+                        <Icon style={styles.listCell} type="ionicon" name="ellipsis-vertical-circle-outline"/>
+                    </View>
                     <FlatList
                         data={orderDS}
-                        renderItem={(orderData) => {
-                            return (
-                                <OrderListItem 
-                                    orderNo={orderData.item.orderNo}
-                                    date={orderData.date}
-                                    customer={orderData.customer}
-                                />
-                            );
-                        }}
-                        keyExtractor={(item, index) => {
-                            return item.id;
-                        }}
+                        renderItem={(renderItem)}
+                        keyExtractor={(item) => item.OrderId }
+                        extraData = {selected.OrderId}
                         alwaysBounceVertical={false}
+                        ListHeaderComponent = {renderHeader}
+                        emptyListView = {emptyListView}
+                        ItemSeparatorComponent = {renderSeparator}
+                        
                     />
                 </View>
-                <View style={styles.buttonContainer}>
+                {/* <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={[]}
                         onPress={() => {
@@ -64,11 +104,11 @@ const PackOrdersScreen = ({ navigation: { goBack } }) => {
                     <TouchableOpacity
                         style={[]}
                         onPress={() => {
-                            alert("Selected order.");
+                            alert(selected.OrderNo);
                         }}>
-                        <Text style={ButtonStyles.buttonText}>Select</Text>
+                        <Text style={[ButtonStyles.buttonText]}>Select</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
         </SafeAreaView>
     );
@@ -80,27 +120,53 @@ export default PackOrdersScreen;
 const styles = StyleSheet.create({
     //flex parent
     container: {
-        flex:1,
-
+        //flex:1,
     },
     //flex child
     orderContainer: {
-        flex:5,
-        borderWidth: 1,
-        margin: 5,
+        //flex:1,
+        //borderWidth: 2,
+        //borderRadius: 5,
+        //margin: 5,
+        height: '85%',
     },
     buttonContainer: {
         flex:1,
+        flexDirection:'row',
     },
     //
-    listButton: {
+    listHeader:{ //Header
+
+    },
+    listItem: { //List item is clickable row item. 
         margin: 5,
+        padding: 5,
+        flexDirection:'row',
+    },
+    listCell:{ //List cell are row cell values.
+        flex: 1,
+        //borderWidth:1,
+        alignContent:'center',
+        alignItems:'center',
+        textAlign: 'center',
+        fontSize: 18,
     },
     selected: {
 
     },
     unselected: {
 
+    },
+    header: {
+        fontSize: 24,
+        paddingVertical: 15,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        backgroundColor: '#DCDCDC',
+    },
+    itemSeparator: {
+        backgroundColor: 'green',
+        height: 1,
     },
 
 
