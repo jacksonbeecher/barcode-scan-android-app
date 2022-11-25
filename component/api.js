@@ -39,8 +39,8 @@ export const getUnitFromApi = async (id) => {
 }
 
 //Load Orders Screen
-export const getOrdersFromApiWithUnitIdAndNoOrders = async() => {
-    return fetch(url)
+export const getOrdersFromApiWithPoolIdAndNoOrders = async(poolId,noOrders) => {
+    return fetch(url+'orders/'+poolId+'/'+noOrders)
     .then((response) => response.json())
     .then((responseJson)=> {
         return responseJson;

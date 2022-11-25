@@ -82,7 +82,7 @@ const UserSelectModal = ({props}) => {
                             loginHandler(); //Save User
                         }
                     }}>
-                    <Text style={ButtonStyles.text}>Log In</Text>
+                    <Text style={ButtonStyles.buttonText}>Log In</Text>
                 </TouchableOpacity>
             </View>
             {isLoading && 
