@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation, route }) => {
     const getData = () => {
         //console.log('HomeScreen created')
         getUser().then((value) => {
-            //console.log(value);
+            console.log(value);
             setCurrentUser(value);
         });
         getUnit().then((value) => {

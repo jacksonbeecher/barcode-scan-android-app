@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FlatList, View, Text, StyleSheet, Pressable, Modal, Image, ActivityIndicator, TouchableOpacity } from "react-native";
+import { FlatList, View, Text, StyleSheet, Pressable, Modal, Image, ActivityIndicator, TouchableOpacity, TextInput } from "react-native";
 import { getUser, removeUser, storeUser } from '../component/storage';
 import { getUsersFromApi } from '../component/api';
 import ButtonStyles from '../styles/ButtonStyles';
@@ -8,6 +8,7 @@ const UserSelectModal = ({props}) => {
     const [selectedUser, setSelectedUserData] = useState([]);
     const [userDS, setUserDS] = useState([]);
     const [isLoading, setLoading] = useState(true); //Use to hide/show loading animation.
+    const [password, setPassword] = useState(null);
 
     //Load users from Api call.
     const fetchUserData = async () => {
@@ -41,10 +42,19 @@ const UserSelectModal = ({props}) => {
     function selectedUserHandler(data) {
         setSelectedUserData(data);
     }
+    
     //Assign user on Login button click.
     function loginHandler() {
         if (selectedUser.length !== 0) {
-            storeUser(selectedUser);
+            if (selectedUser.Password === password) { //Password is correct for user. 
+                storeUser(selectedUser);
+            }
+            else if (selectedUser.Password === null && password === null) { //User does not have a password and password is not entered.
+                storeUser(selectedUser);
+            }
+            else{
+                alert("Incorrect password.");
+            }
         } else {
             alert("A user must be selected.");
         }
@@ -60,7 +70,7 @@ const UserSelectModal = ({props}) => {
                 />
             </View>
             <View style = {styles.userSelectContainer}> 
-                <Text style={styles.title}>Select your user name from the list and tap Log In to continue</Text>
+                {/* <Text style={styles.title}>Select your user name from the list and tap Log In to continue</Text> */}
                 <Text style={styles.text}>Selected User: {selectedUser.UserName}</Text>
                 
                 {userDS && <FlatList //Considtionally load when user data exists.
@@ -72,6 +82,15 @@ const UserSelectModal = ({props}) => {
                     maxToRenderPerBatch={1}
                     windowSize = {10}
                 />}
+                {userDS && <TextInput 
+                    style = {styles.passwordInput}
+                    placeholder="Password"
+                    autoCorrect={false}
+                    onChangeText={setPassword}
+                    paddingHorizontal={5}
+                    fontSize={20}
+                    >
+                </TextInput>}
             </View> 
 
             <View style={styles.buttonContainer}>
@@ -110,22 +129,26 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     userSelectContainer : {
-        flex: 2,
+        flex: 4,
+
     },
     buttonContainer: {
         flex: 1,
+        
     },
     //
+    userContainer: {
+        margin: 5,
+        borderWidth:1,
+        borderRadius:5,
+        paddingHorizontal:5,
+    },
     text: {
         fontSize: 20,
     },
     title: {
         fontSize: 22,
         textAlign: 'center',
-    },
-    userContainer: {
-        borderWidth: 1,
-        margin: 5,
     },
     selected: {
 
@@ -146,5 +169,11 @@ const styles = StyleSheet.create({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
+        zIndex:20,
+    },
+    passwordInput: {
+        borderWidth:1,
+        borderRadius:5,
+        margin:5,
     }
 })
