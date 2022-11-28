@@ -73,6 +73,28 @@ const SettingsScreen = ({ navigation: { goBack } }) => {
                         />
                     </View>
                 </View>
+
+                <View style={styles.setting}>
+                    <Text style={styles.settingLabel}>IP Address: </Text>
+                    <View >
+                        
+                    </View>
+                </View>
+
+                <View style={styles.setting}>
+                    <Text style={styles.settingLabel}>Port: </Text>
+                    <View >
+                        
+                    </View>
+                </View>
+
+                <View style={styles.setting}>
+                    <Text style={styles.settingLabel}>Clear Orders: </Text>
+                    <View >
+                        
+                    </View>
+                </View>
+
             </View>
             <View style={[]}>
                 <TouchableOpacity

@@ -25,7 +25,7 @@ const UserSelectModal = ({props}) => {
     useEffect(() => {
         fetchUserData();
         return () => {
-            //setUserDS({}); //Clear on unmount.
+            //setUserDS([]); //Clear on unmount.
         }
     }, []);
 

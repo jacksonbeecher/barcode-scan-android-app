@@ -5,16 +5,21 @@ import OrderListItem  from '../component/OrderListItem';
 import ButtonStyles from '../styles/ButtonStyles';
 import { getOrders } from '../component/storage';
 import { Icon } from '@rneui/themed';
-import PackItemsScreen from './PackDetailsScreen';
+import PackDetailsScreen from './PackDetailsScreen';
+import moment from 'moment';
 
-const ListItem = ({ item, onPress, style}) => (
-    <TouchableOpacity onPress={onPress} style = {[styles.listItem, style]}>
-        <Text style={styles.listCell}>{item.OrderNo}</Text>
-        {/* <Text style={styles.listCell}>{item.Customer}</Text> */}
-        <Text style={styles.listCell}>{item.Reference}</Text>
-        <Icon style={[]} type="ionicon" name="chevron-forward-outline"/>
-    </TouchableOpacity>
-);
+const ListItem = ({ item, onPress, style}) => {
+    moment.locale('en');
+    var dt = item.OrderDate;
+    var date = moment(dt).format('DD/MM/YYYY')
+    return (
+        <TouchableOpacity onPress={onPress} style = {[styles.listItem, style]}>
+            <Text style={styles.listCell}>{item.Customer}</Text>
+            <Text style={styles.listCell}>{date}</Text>
+            <Text style={styles.listCell}>{item.OrderNo}</Text>
+            <Icon style={[]} type="ionicon" name="chevron-forward-outline"/>
+        </TouchableOpacity>
+    )};
 
 //Pack Order Structure - PackOrderScreen(Select Order) -> PickOrderScreen(Details of selected orders) -> PackItemsScreen (Lines of Selected orders, Scan products to pick.) -> PackProducts -> Packaging -> Carrier Details 
 const PackOrdersScreen = ({ navigation }) => {
@@ -64,7 +69,7 @@ const PackOrdersScreen = ({ navigation }) => {
                 item={item}
                 onPress={() => {
                     /* 1. Navigate to the Details route with params */
-                    navigation.navigate('Pack Details');
+                    navigation.navigate('Pack Details', {item});
                 }}
                 backgroundColor={{ backgroundColor }}
                 textColor = {{ color }}
@@ -77,8 +82,10 @@ const PackOrdersScreen = ({ navigation }) => {
             <View style={styles.container}>
                 <View style={styles.orderContainer}>
                     <View style = {styles.listItem}>
+                        <Text style={styles.listCell}>Customer</Text>
+                        <Text style={styles.listCell}>Date</Text>
                         <Text style={styles.listCell}>Order No</Text>
-                        <Text style={styles.listCell}>Reference</Text>
+                        
                         <Icon style={styles.listCell} type="ionicon" name="ellipsis-vertical-circle-outline"/>
                     </View>
                     <FlatList
@@ -149,7 +156,7 @@ const styles = StyleSheet.create({
         alignContent:'center',
         alignItems:'center',
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: 16,
     },
     selected: {
 
@@ -170,11 +177,4 @@ const styles = StyleSheet.create({
     },
 
 
-})
-
-const PackDetailsScreen = ({route, navigation}) => {
-
-    return (
-        <PackItemsScreen></PackItemsScreen>
-    )
-}
+});
