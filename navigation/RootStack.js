@@ -12,6 +12,7 @@ import SendOrdersScreen from '../screens/SendOrdersScreen';
 import UserSelectModal from '../screens/UserSelectModal';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import PackDetailsScreen from '../screens/PackDetailsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -79,6 +80,13 @@ export default function RootStack({ navigation, route }) {
                         <Stack.Screen
                             name="Pack Order"
                             component={PackOrdersScreen}
+                            options={() => ({
+                                headerTitleAlign: 'center',
+                            })}
+                        />
+                        <Stack.Screen
+                            name="Pack Details"
+                            component={PackDetailsScreen}
                             options={() => ({
                                 headerTitleAlign: 'center',
                             })}

@@ -5,7 +5,7 @@ import OrderListItem  from '../component/OrderListItem';
 import ButtonStyles from '../styles/ButtonStyles';
 import { getOrders } from '../component/storage';
 import { Icon } from '@rneui/themed';
-import PackItemsScreen from './PackItemsScreen';
+import PackItemsScreen from './PackDetailsScreen';
 
 const ListItem = ({ item, onPress, style}) => (
     <TouchableOpacity onPress={onPress} style = {[styles.listItem, style]}>
@@ -17,7 +17,7 @@ const ListItem = ({ item, onPress, style}) => (
 );
 
 //Pack Order Structure - PackOrderScreen(Select Order) -> PickOrderScreen(Details of selected orders) -> PackItemsScreen (Lines of Selected orders, Scan products to pick.) -> PackProducts -> Packaging -> Carrier Details 
-const PackOrdersScreen = ({ navigation}) => {
+const PackOrdersScreen = ({ navigation }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const [orderDS, setOrderDs] = useState([]);
@@ -64,7 +64,7 @@ const PackOrdersScreen = ({ navigation}) => {
                 item={item}
                 onPress={() => {
                     /* 1. Navigate to the Details route with params */
-                    navigation.navigate('PackItemsScreen', {item});
+                    navigation.navigate('Pack Details');
                 }}
                 backgroundColor={{ backgroundColor }}
                 textColor = {{ color }}
@@ -77,8 +77,8 @@ const PackOrdersScreen = ({ navigation}) => {
             <View style={styles.container}>
                 <View style={styles.orderContainer}>
                     <View style = {styles.listItem}>
-                        <Text style={styles.listCell}>OrderNo</Text>
-                        <Text style={styles.listCell}>Referen</Text>
+                        <Text style={styles.listCell}>Order No</Text>
+                        <Text style={styles.listCell}>Reference</Text>
                         <Icon style={styles.listCell} type="ionicon" name="ellipsis-vertical-circle-outline"/>
                     </View>
                     <FlatList
@@ -171,3 +171,10 @@ const styles = StyleSheet.create({
 
 
 })
+
+const PackDetailsScreen = ({route, navigation}) => {
+
+    return (
+        <PackItemsScreen></PackItemsScreen>
+    )
+}
