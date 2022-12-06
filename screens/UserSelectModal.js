@@ -89,6 +89,7 @@ const UserSelectModal = ({props}) => {
                     onChangeText={setPassword}
                     paddingHorizontal={5}
                     fontSize={20}
+                    maxLength={20}
                     >
                 </TextInput>}
             </View> 
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
 
     },
     buttonContainer: {
-        flex: 1,
+        flex: 1.1,
         
     },
     //
