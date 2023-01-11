@@ -19,7 +19,8 @@ const ListItem = ({ item, onPress, style}) => {
             <Text style={styles.listCell}>{item.OrderNo}</Text>
             <Icon style={[]} type="ionicon" name="chevron-forward-outline"/>
         </TouchableOpacity>
-    )};
+    )
+};
 
 //Pack Order Structure - PackOrderScreen(Select Order) -> PickOrderScreen(Details of selected orders) -> PackItemsScreen (Lines of Selected orders, Scan products to pick.) -> PackProducts -> Packaging -> Carrier Details 
 const PackOrdersScreen = ({ navigation }) => {
@@ -76,7 +77,6 @@ const PackOrdersScreen = ({ navigation }) => {
             />
         );
     }
-
     return (
         <SafeAreaView>
             <View style={styles.container}>
@@ -85,7 +85,6 @@ const PackOrdersScreen = ({ navigation }) => {
                         <Text style={styles.listCell}>Customer</Text>
                         <Text style={styles.listCell}>Date</Text>
                         <Text style={styles.listCell}>Order No</Text>
-                        
                         <Icon style={styles.listCell} type="ionicon" name="ellipsis-vertical-circle-outline"/>
                     </View>
                     <FlatList
@@ -93,29 +92,12 @@ const PackOrdersScreen = ({ navigation }) => {
                         renderItem={(renderItem)}
                         keyExtractor={(item) => item.OrderId }
                         extraData = {selected.OrderId}
-                        alwaysBounceVertical={false}
+                        alwaysBounceVertical={true}
                         ListHeaderComponent = {renderHeader}
                         emptyListView = {emptyListView}
                         ItemSeparatorComponent = {renderSeparator}
-                        
                     />
                 </View>
-                {/* <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={[]}
-                        onPress={() => {
-                            goBack()
-                        }}>
-                        <Text style={ButtonStyles.buttonText}>Cancel</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[]}
-                        onPress={() => {
-                            alert(selected.OrderNo);
-                        }}>
-                        <Text style={[ButtonStyles.buttonText]}>Select</Text>
-                    </TouchableOpacity>
-                </View> */}
             </View>
         </SafeAreaView>
     );
